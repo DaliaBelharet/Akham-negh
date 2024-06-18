@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Navbar from '../components/Navbar';
+import Navbar from "../components/Navbar"; 
+import Navbar1 from "../components/Navbar1";
 import Footer from '../components/footer';
 import { useNavigate } from 'react-router-dom';
+import { FaUserCircle } from 'react-icons/fa';
+import { useSelector } from 'react-redux'; 
+
 
 const VisitForm = () => {
     const [formData, setFormData] = useState({
@@ -13,7 +17,10 @@ const VisitForm = () => {
     });
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
-    const [titleColor, setTitleColor] = useState('#000'); // État pour gérer la couleur du titre
+    const [titleColor, setTitleColor] = useState('#000');
+
+    // Utilisation de useSelector pour obtenir currentUser depuis le Redux store
+    const { currentUser } = useSelector((state) => state.user);
 
     const handleChange = (e) => {
         setFormData({
@@ -34,7 +41,7 @@ const VisitForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrors({}); // Réinitialiser les erreurs
+        setErrors({});
         const newErrors = {};
 
         if (!formData.nomComplet) {
@@ -65,20 +72,43 @@ const VisitForm = () => {
         }
     };
 
+    const handleCancel = () => {
+        navigate(-1); 
+    };
+
     return (
         <div>
-            <Navbar />
+     {currentUser ? <Navbar1 /> : <Navbar />  }
+
+      
+            {!currentUser && (
+                <div style={styles.modalBackground}>
+                    <div style={styles.modalContent}>
+                        <div style={styles.iconContainer}>
+                            <FaUserCircle style={styles.icon} />
+                        </div>
+                        <h3 style={{ ...styles.modalText, fontWeight: 'bold' }}>
+                            Vous devez être connecté pour soumettre le formulaire de demande de visite.
+                        </h3>
+                        <div style={{ textAlign: 'center' }}>
+                            <a href="/sign-in" style={{ ...styles.signInLink, fontWeight: 'bold' }}>Connectez-vous ici</a>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            
             <div style={{ marginTop: '100px', display: 'flex', justifyContent: 'center' }}>
                 <div style={{ width: '500px', backgroundColor: '#f5f5f5', borderRadius: '10px', padding: '20px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', marginBottom: '90px' }}>
                     <div>
-                        <h2 
-                            style={{ ...styles.formTitle, ...styles.centerText, fontSize: '24px', color: titleColor }} 
-                            onMouseEnter={() => setTitleColor('orange')} 
+                        <h2
+                            style={{ ...styles.formTitle, fontSize: '24px', color: titleColor ,marginLeft:"110px"}}
+                            onMouseEnter={() => setTitleColor('orange')}
                             onMouseLeave={() => setTitleColor('#000')}
                         >
                             Demande de Visite
                         </h2>
-                        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}> 
+                        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
                             <div style={styles.formGroup}>
                                 <label style={{ ...styles.label, marginTop: '20px' }}>Nom Complet *:</label>
                                 <input type="text" name="nomComplet" value={formData.nomComplet} onChange={handleChange} required />
@@ -96,24 +126,25 @@ const VisitForm = () => {
                             </div>
                             <div style={styles.formGroup}>
                                 <label style={styles.label}>Message:</label>
-                                <textarea 
-                                    name="message" 
-                                    value={formData.message} 
-                                    onChange={handleChange} 
-                                    rows="4" 
-                                    style={{ marginTop: '10px' }} 
-                                    placeholder="Écrivez votre message ici " 
-                                    required 
+                                <textarea
+                                    name="message"
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    rows="4"
+                                    style={{ marginTop: '10px' }}
+                                    placeholder="Écrivez votre message ici "
+                                    required
                                 />
                             </div>
                             <div style={{ ...styles.buttonGroup, marginTop: '20px' }}>
-                                <button type="button" style={styles.cancelButton}>Annuler</button>
+                            <button type="button" style={styles.cancelButton} onClick={handleCancel}>Annuler</button>
                                 <button type="submit" style={styles.sendButton}>Envoyer</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+
             <Footer />
         </div>
     );
@@ -128,7 +159,7 @@ const styles = {
     formGroup: {
         marginBottom: '20px',
         display: 'flex',
-        flexDirection: 'column', // Align items vertically
+        flexDirection: 'column',
     },
     buttonGroup: {
         display: 'flex',
@@ -151,11 +182,8 @@ const styles = {
         cursor: 'pointer',
         borderRadius: '5px',
     },
-    centerText: {
-        textAlign: 'center',
-    },
     label: {
-        width: '150px', // Adjust the width if necessary
+        width: '150px',
         marginRight: '20px',
         fontWeight: 'bold',
     },
@@ -163,7 +191,45 @@ const styles = {
         color: 'red',
         fontSize: '14px',
         marginTop: '5px',
-    }
+    },
+    modalBackground: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fond sombre semi-transparent
+        zIndex: '1000',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalContent: {
+        backgroundColor: '#fff',
+        borderRadius: '10px',
+        padding: '40px',
+        textAlign: 'center',
+        boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.2)',
+    },
+    modalText: {
+        fontSize: '18px',
+        marginBottom: '20px',
+    },
+    signInLink: {
+        color: '#F27438',
+        textDecoration: 'underline',
+        cursor: 'pointer',
+        fontWeight: 'bold',
+    },
+    iconContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        marginBottom: '20px',
+    },
+    icon: {
+        fontSize: '48px',
+        color: '#F27438',
+    },
 };
 
 export default VisitForm;
