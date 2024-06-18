@@ -4,7 +4,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import sorry from '../assets/sorry.png';
-import Navbar from '../components/Navbar1';
+import Navbar from '../components/Navbar';
+import Navbar1 from '../components/Navbar1';
 import Footer from '../components/footer';
 import { useSelector } from 'react-redux';
 
@@ -12,8 +13,6 @@ const SearchResults = () => {
   const location = useLocation();
   const { houses, loading } = location.state || { houses: [], loading: false };
   const { currentUser } = useSelector((state) => state.user);
-  // eslint-disable-next-line no-unused-vars
-  const userId = currentUser.user._id;
 
   if (loading) {
     return (
@@ -27,7 +26,7 @@ const SearchResults = () => {
   if (!Array.isArray(houses) || houses.length === 0) {
     return (
       <div>
-        <Navbar />
+        {currentUser ? <Navbar1 /> : <Navbar />  }
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh', backgroundColor: '#f0f0f0' }}>
           <div style={{ display: 'flex', alignItems: 'center', maxWidth: '800px', padding: '20px', boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)', borderRadius: '10px', background: 'white' }}>
             <img src={sorry} style={{ width: '300px', height: 'auto', marginRight: '20px' }} alt="Sorry" />
@@ -46,7 +45,7 @@ const SearchResults = () => {
 
   return (
     <div style={{ backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
-      <Navbar />
+          {currentUser ? <Navbar1 /> : <Navbar />}
       <div style={{ fontFamily: "Arial, sans-serif" }}>
         <h1 style={{ fontSize: "36px", fontWeight: "bold", textAlign: "center", marginBottom: "40px" }}>Résultats de la recherche</h1>
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap" }}>
