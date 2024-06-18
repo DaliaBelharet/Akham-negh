@@ -1,15 +1,19 @@
 import React from 'react';
 import MainSection from '../components/MainSection';
 import Navbar from '../components/Navbar';
+import Navbar1 from "../components/Navbar1";
 import Footer from '../components/footer';
 import NosServices from '../components/NosServices';
 import AboutUs from '../components/AboutUs';
+import { useSelector } from "react-redux";
 
 const LandingPage = () => {
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <div>
+   
       <div className="navbar"> 
-        <Navbar />
+      {currentUser ? <Navbar1 /> : <Navbar />}
       </div>
       <MainSection />
       <div className="space-between-sections" style={styles.space}></div>
