@@ -2,9 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ThreeSixtyViewer from '../components/ThreeSixtyViewer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons'; // Importer l'icône de flèche
+import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons'; 
 
-// Importer votre image d'arrière-plan
 import backgroundImage from '../assets/decoo.jpg';
 
 const Visitt = () => {
@@ -13,31 +12,31 @@ const Visitt = () => {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: '100vh', // Assure que le contenu occupe toute la hauteur de la vue
-    backgroundImage: `url(${backgroundImage})`, // Ajout de l'image de fond
-    backgroundSize: 'cover', // Ajuste la taille de l'image pour remplir le conteneur
-    backgroundPosition: 'center', // Centre l'image dans le conteneur
+    minHeight: '100vh', 
+    backgroundImage: `url(${backgroundImage})`,
+    backgroundSize: 'cover', 
+    backgroundPosition: 'center', 
   };
 
   const buttonContainerStyle = {
-    marginTop: '20px', // Espace au-dessus du bouton (modifié)
-    marginBottom: '20px', // Espace en dessous du bouton (ajouté)
+    marginTop: '20px', 
+    marginBottom: '20px', 
     display: 'flex',
-    justifyContent: 'flex-end', // Aligner le bouton à droite
-    width: '100%', // Assure que le bouton occupe toute la largeur
+    justifyContent: 'flex-end',
+    width: '100%', 
   };
 
   const buttonStyle = {
     textDecoration: 'none',
     display: 'flex',
     alignItems: 'center',
-    color: 'orange', // Couleur du texte orange (modifié)
-    border: '2px solid orange', // Bordure orange (ajouté)
+    color: 'orange', 
+    border: '2px solid orange', 
     borderRadius: '5px',
     fontSize: '18px',
     fontWeight: 'bold',
     padding: '10px 20px',
-    backgroundColor: 'transparent', // Fond transparent (modifié)
+    backgroundColor: 'transparent', 
   };
 
   return (
