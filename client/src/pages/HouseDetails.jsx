@@ -4,21 +4,26 @@ import { useParams, Link } from "react-router-dom";
 import { FaLocationDot, FaImages, FaCoins } from "react-icons/fa6";
 import { IoArrowBackCircle, IoArrowBack, IoArrowForward } from "react-icons/io5";
 import { PiVirtualRealityBold } from "react-icons/pi";
-import Navbar from '../components/Navbar1';
+import Navbar from '../components/Navbar';
+import Navbar1 from '../components/Navbar1';
 import Footer from '../components/footer';
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { useSelector } from "react-redux";
 
 Modal.setAppElement('#root');
 
 const HouseDetails = () => {
+
   const { id } = useParams();
   const [house, setHouse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const { currentUser } = useSelector((state) => state.user);
+  
 
   useEffect(() => {
     const fetchHouseDetails = async () => {
@@ -66,7 +71,7 @@ const HouseDetails = () => {
   if (loading) {
     return (
       <div style={{ textAlign: "center", marginTop: "120px", fontFamily: "Arial, sans-serif" }}>
-        <Navbar />
+         {currentUser ? <Navbar1 /> : <Navbar />  }
         <div style={{ fontSize: "24px", marginBottom: "20px" }}>Chargement en cours...</div>
         <FontAwesomeIcon icon={faSpinner} spin style={{ fontSize: "50px", color: "#F27438" }} />
       </div>
@@ -81,7 +86,7 @@ const HouseDetails = () => {
 
   return (
     <div style={{ backgroundColor: "#f0f0f0" }}>
-      <Navbar />
+         {currentUser ? <Navbar1 /> : <Navbar />}
       <div style={{ marginTop: "50px", fontFamily: "Arial, sans-serif", padding: "20px" }}>
         <section style={{ marginBottom: "20px", position: "relative" }}>
           {house.images && house.images.length > 0 && (
