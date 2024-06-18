@@ -3,7 +3,6 @@ import axios from 'axios';
 import Sidebar from '../components/SideBar';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Modal from 'react-modal';
-import { useSelector } from 'react-redux';
 
 Modal.setAppElement('#root');
 
@@ -11,9 +10,6 @@ function Avis() {
     const [avis, setAvis] = useState([]);
     const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
     const [selectedAvisId, setSelectedAvisId] = useState(null);
-    const { currentUser } = useSelector((state) => state.user);
-    // eslint-disable-next-line no-unused-vars
-    const userId = currentUser.user._id;
 
     useEffect(() => {
         axios.get('http://localhost:5000/api/v4/avis/avis')
