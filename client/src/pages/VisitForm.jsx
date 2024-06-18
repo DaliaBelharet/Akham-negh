@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Navbar from "../components/Navbar"; 
+import Navbar from "../components/Navbar";
 import Navbar1 from "../components/Navbar1";
 import Footer from '../components/footer';
 import { useNavigate } from 'react-router-dom';
-import { FaUserCircle } from 'react-icons/fa';
-import { useSelector } from 'react-redux'; 
-
+import { FaUserCircle, FaArrowLeft } from 'react-icons/fa'; 
+import { useSelector } from 'react-redux';
 
 const VisitForm = () => {
     const [formData, setFormData] = useState({
@@ -16,8 +15,8 @@ const VisitForm = () => {
         message: '',
     });
     const [errors, setErrors] = useState({});
+    const [titleColor, setTitleColor] = useState('#000'); // State for title color
     const navigate = useNavigate();
-    const [titleColor, setTitleColor] = useState('#000');
 
     // Utilisation de useSelector pour obtenir currentUser depuis le Redux store
     const { currentUser } = useSelector((state) => state.user);
@@ -73,14 +72,13 @@ const VisitForm = () => {
     };
 
     const handleCancel = () => {
-        navigate(-1); 
+        navigate(-1);
     };
 
     return (
         <div>
-     {currentUser ? <Navbar1 /> : <Navbar />  }
+            {currentUser ? <Navbar1 /> : <Navbar />}
 
-      
             {!currentUser && (
                 <div style={styles.modalBackground}>
                     <div style={styles.modalContent}>
@@ -93,16 +91,21 @@ const VisitForm = () => {
                         <div style={{ textAlign: 'center' }}>
                             <a href="/sign-in" style={{ ...styles.signInLink, fontWeight: 'bold' }}>Connectez-vous ici</a>
                         </div>
+                        {/* Lien de retour avec icône */}
+                        <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <FaArrowLeft style={{ marginRight: '5px' }} /> 
+                        <a href="#" onClick={handleCancel} style={styles.returnLink}>Retour</a> 
+                        </div>
+
                     </div>
                 </div>
             )}
 
-            
             <div style={{ marginTop: '100px', display: 'flex', justifyContent: 'center' }}>
                 <div style={{ width: '500px', backgroundColor: '#f5f5f5', borderRadius: '10px', padding: '20px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', marginBottom: '90px' }}>
                     <div>
                         <h2
-                            style={{ ...styles.formTitle, fontSize: '24px', color: titleColor ,marginLeft:"110px"}}
+                            style={{ ...styles.formTitle, fontSize: '24px', color: titleColor, marginLeft: "110px" }}
                             onMouseEnter={() => setTitleColor('orange')}
                             onMouseLeave={() => setTitleColor('#000')}
                         >
@@ -137,7 +140,7 @@ const VisitForm = () => {
                                 />
                             </div>
                             <div style={{ ...styles.buttonGroup, marginTop: '20px' }}>
-                            <button type="button" style={styles.cancelButton} onClick={handleCancel}>Annuler</button>
+                                <button type="button" style={styles.cancelButton} onClick={handleCancel}>Annuler</button>
                                 <button type="submit" style={styles.sendButton}>Envoyer</button>
                             </div>
                         </form>
@@ -229,6 +232,14 @@ const styles = {
     icon: {
         fontSize: '48px',
         color: '#F27438',
+    },
+    returnLink: {
+        color: '#000',
+        fontWeight: 'bold',
+        fontSize: '18px',
+        display: 'flex',
+        alignItems: 'center',
+        textDecoration: 'none',
     },
 };
 
