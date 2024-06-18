@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; 
 import logo from "../assets/DARKOUM.png";
 import Modal from '../components/Modal'; 
+import LoginIcon from '@mui/icons-material/Login';
 
 const Navbar = () => {
     const [showModal, setShowModal] = useState(false);
@@ -39,16 +40,23 @@ const Navbar = () => {
                 display: 'flex',
                 justifyContent: 'flex-end'
             }}>
-                <li style={{ marginRight: 20, fontWeight: 'bold' }}>
-                    <Link to="/">Accueil</Link>
+                <li style={{ marginRight:30, fontWeight: 'bold' }}>
+                    <Link to="/Home" style={{ textDecoration: 'none', color: 'black', position: 'relative' }}>
+                        Accueil
+                        <span style={{ position: 'absolute', bottom: -2, left: 0, width: '100%', height: 2, backgroundColor: 'black', transform: 'scaleX(0)', transition: 'transform 0.3s ease' }}></span>
+                    </Link>
                 </li>
-                <li style={{ marginRight: 20, fontWeight: 'bold', marginLeft: 20 }}>
-                    <div id="nos-services">
-                        <a href="#nosservices">Nos services</a>
-                    </div>
+                <li style={{ marginRight:30, fontWeight: 'bold', marginLeft: 30 }}>
+                    <Link to="/NosServices" style={{ textDecoration: 'none', color: 'black', position: 'relative' }}>
+                        Nos services
+                        <span style={{ position: 'absolute', bottom: -2, left: 0, width: '100%', height: 2, backgroundColor: 'black', transform: 'scaleX(0)', transition: 'transform 0.3s ease' }}></span>
+                    </Link>
                 </li>
-                <li style={{ fontWeight: 'bold', marginLeft: 20 }}>
-                    <a href="#AboutUs">A propos</a>
+                <li style={{ fontWeight: 'bold', marginLeft: 30 }}>
+                    <Link to="/AboutUs" style={{ textDecoration: 'none', color: 'black', position: 'relative' }}>
+                        À propos
+                        <span style={{ position: 'absolute', bottom: -2, left: 0, width: '100%', height: 2, backgroundColor: 'black', transform: 'scaleX(0)', transition: 'transform 0.3s ease' }}></span>
+                    </Link>
                 </li>
             </ul>
             
@@ -61,7 +69,11 @@ const Navbar = () => {
                 borderRadius: 5,
                 cursor: 'pointer',
                 fontWeight: 'bold'
-            }} onClick={openModal}>Se connecter</button>
+            }} onClick={openModal}>Se connecter
+            <LoginIcon style={{marginLeft:"5px"}}/>
+            </button>
+
+        
 
             {/* Modal */}
             {showModal && (
