@@ -4,11 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FaLocationDot, FaHeart, FaRegHeart, FaAngleDown, FaCoins } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar1";
+import Navbar from "../components/Navbar"; 
+import Navbar1 from "../components/Navbar1";
 import Footer from "../components/footer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import HomeIcon from '@mui/icons-material/Home';
 
 const Search = () => {
   const [houses, setHouses] = useState([]);
@@ -19,7 +22,7 @@ const Search = () => {
   const [sortBy, setSortBy] = useState("recent");
   const [showSortOptions, setShowSortOptions] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
-  const userId = currentUser.user._id;
+  const userId = currentUser ? currentUser.user._id : null;
 
   useEffect(() => {
     const fetchHouses = async () => {
@@ -47,7 +50,9 @@ const Search = () => {
       }
     };
 
-    fetchFavorites();
+    if (userId) {
+      fetchFavorites();
+    }
   }, [userId]);
 
   useEffect(() => {
@@ -81,7 +86,20 @@ const Search = () => {
 
   const handleUpdateFavorite = async (houseId) => {
     try {
-      const action = favorites.includes(houseId) ? 'remove' : 'add';
+      if (!currentUser) {
+        toast.error(
+          <span style={{ fontSize: "16px" }}>
+            Vous devez être connecté pour ajouter ce bien à vos favoris.{" "}
+            <Link to="/sign-in" style={{ color: "#F27438" }}>
+              Connectez-vous ici
+            </Link>
+          </span>,
+          { autoClose: 8000 }
+        );
+        return;
+      }
+
+      const action = favorites.includes(houseId) ? "remove" : "add";
 
       await axios.put(
         `http://localhost:5000/api/v1/auth/${userId}/updateFav`,
@@ -89,9 +107,13 @@ const Search = () => {
         { withCredentials: true }
       );
 
-      if (action === 'remove') {
+      if (action === "remove") {
         setFavorites(favorites.filter((fav) => fav !== houseId));
-        toast.error(<span style={{ color: "red" }}>Ce bien a été supprimé de vos favoris !</span>);
+        toast.error(
+          <span style={{ color: "red" }}>
+            Ce bien a été supprimé de vos favoris !
+          </span>
+        );
       } else {
         setFavorites([...favorites, houseId]);
         toast.success("Ce bien a été ajouté à votre liste de favoris !");
@@ -101,7 +123,6 @@ const Search = () => {
       toast.error("Une erreur est survenue lors de la mise à jour des favoris.");
     }
   };
-
 
   const sortHouses = (houses) => {
     switch (sortBy) {
@@ -150,11 +171,12 @@ const Search = () => {
         paddingTop: "120px",
       }}
     >
-      <Navbar />
+      {currentUser ? <Navbar1 /> : <Navbar />  }
+      <ToastContainer />
       <ToastContainer />
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px", paddingLeft: "20px", paddingRight: "20px" }}>
-        <h1 style={{ fontSize: "20px", fontWeight: "bold", margin: "0" }}>{houses.length} biens trouvés</h1>
+        <h1 style={{ fontSize: "20px", fontWeight: "bold", margin: "0" }}>{houses.length} biens trouvés <HomeIcon style={{marginLeft:"5px"}}/></h1>
         <div style={{ display: "flex", alignItems: "center" }}>
           <span>Trier par :</span>
           <div style={{ position: "relative", marginLeft: "10px" }}>
@@ -289,7 +311,7 @@ const Search = () => {
         </div>
       </div>
     ))}
-
+{currentUser && (
     <div
       style={{ textAlign: "center", marginTop: "40px", marginBottom: "40px" }}
     >
@@ -307,9 +329,11 @@ const Search = () => {
           marginTop: "100px",
         }}
       >
-        Accéder à mes favoris
+        Accéder à mes favoris <FavoriteBorderIcon style={{marginLeft:"5px"}}/>
       </Link>
     </div>
+    )}
+
     <Footer />
   </div>
 );
