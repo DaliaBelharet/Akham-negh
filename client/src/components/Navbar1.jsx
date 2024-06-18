@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-// eslint-disable-next-line no-unused-vars
-import { logoutUser, logout } from '../redux/userSlice';
+
+import { logout } from '../redux/userSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from "../assets/DARKOUM.png";
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
@@ -13,7 +13,7 @@ const Navbar1 = () => {
     const handleLogout = () => {
         dispatch(logout());
         // dispatch(logoutUser());
-        navigate('/sign-in');
+        navigate('/');
     };
 
     return (
