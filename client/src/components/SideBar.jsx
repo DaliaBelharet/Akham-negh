@@ -16,8 +16,8 @@ function Sidebar() {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        dispatch(logout()); // Déclencher l'action de déconnexion
-        navigate('/'); // Rediriger l'utilisateur vers la page de connexion
+        dispatch(logout()); 
+        navigate('/'); 
     };
 
     return (
