@@ -6,14 +6,11 @@ import "slick-carousel/slick/slick-theme.css";
 import tizi1 from "../assets/ev.PNG";
 import tizi2 from "../assets/tizi10.PNG";
 import tizi3 from "../assets/yy.jpg";
-import Navbar1 from "../components/Navbar";
 import TypeAnnonce from "../components/TypeAnnonce";
 import PriceSelector from "../components/PriceRangeSelector";
 import HouseTypeSelector from "../components/HouseTypeSelector";
 import WilayaSelector from "../components/WilayaSelector";
 import axios from "axios";
-import Footer from "../components/footer";
-import home from "../assets/home.jpg";
 import SearchIcon from '@mui/icons-material/Search';
 const Section = () => {
   const [formData, setFormData] = useState({
@@ -119,6 +116,7 @@ const Section = () => {
           }
 
           .background-container {
+  
             position: relative;
             width: 100%;
             overflow: hidden;
@@ -128,6 +126,7 @@ const Section = () => {
           }
 
           .background-img {
+          
             width: auto;
             max-width: 100%;
             max-height: 800px; 
@@ -136,7 +135,7 @@ const Section = () => {
 
           .form-container {
             position: absolute;
-            top: 30%;
+            top: 31%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 80%;
