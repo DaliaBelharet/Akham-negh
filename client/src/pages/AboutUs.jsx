@@ -13,7 +13,7 @@ const AboutUss = () => {
   return (
     <div style={styles.container}>
       <div className="navbar">
-        <Navbar />
+      {currentUser ? <Navbar1 /> : <Navbar />}
       </div>
       
       <div style={styles.videoContainer}>
