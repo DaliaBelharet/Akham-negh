@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import Navbar from '../components/Navbar1';
+import Navbar from '../components/Navbar';
+import Navbar1 from '../components/Navbar1';
 import Footer from '../components/footer';
 import videoFile from '../assets/vidi.mp4';
-import imageFile from '../assets/iim.jpg'; // Ajoutez votre chemin d'accès à votre image
+import imageFile from '../assets/iim.jpg'; 
+import { useSelector } from 'react-redux';
 
 const AboutUss = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const { currentUser } = useSelector((state) => state.user);
 
   return (
     <div style={styles.container}>
