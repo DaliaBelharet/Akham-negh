@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaLocationDot,FaHeart } from 'react-icons/fa6';
+import { FaLocationDot, FaHeart, FaArrowLeft } from 'react-icons/fa6';
 import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -43,7 +43,7 @@ const SearchResults = () => {
         toast.error(
           <span style={{ fontSize: "16px" }}>
             Vous devez être connecté pour ajouter ce bien à vos favoris.{" "}
-            <Link to="/sign-in" style={{ color: "#F27438" ,fontWeight:"bold"}}>
+            <Link to="/sign-in" style={{ color: "#F27438", fontWeight: "bold" }}>
               Connectez-vous ici
             </Link>
           </span>,
@@ -97,7 +97,10 @@ const SearchResults = () => {
               <p style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '10px' }}>Désolé pour le moment, il n'y a pas de biens correspondant à vos critères de recherche.</p>
               <p>Revenez souvent pour découvrir de nouvelles annonces !</p>
               <p>Modifiez vos critères de recherche pour obtenir plus de résultats.</p>
-              <Link to="/home" style={{ color: '#F27438', textDecoration: 'none', fontWeight: 'bold' }}>Retour à la page d'accueil</Link>
+              <Link to="/home" style={{ color: '#F27438', textDecoration: 'none', fontWeight: 'bold' }}>
+                <FaArrowLeft style={{ marginRight: '8px' }} />
+                Retour à la page d'accueil
+              </Link>
             </div>
           </div>
         </div>
@@ -157,8 +160,20 @@ const SearchResults = () => {
             </div>
           ))}
         </div>
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
-          <Link to="/home" style={{ color: '#F27438', textDecoration: 'none', fontWeight: 'bold' }}>Retour à la page d'accueil</Link>
+        <div style={{ textAlign: 'center', marginTop: '20px' , marginLeft: '900px'}}>
+          <Link
+            to="/home"
+            style={{
+              color: '#000000',
+              textDecoration: 'none',
+              fontWeight: 'bold',
+              display: 'inline-flex',
+              alignItems: 'center',
+            }}
+          >
+            <FaArrowLeft style={{ marginRight: '8px' }} />
+            Retour à la page d'accueil
+          </Link>
         </div>
       </div>
       <Footer />
